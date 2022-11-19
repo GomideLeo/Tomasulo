@@ -1,5 +1,6 @@
 from Instruction import Instruction
 
+
 class ReservationStation:
     ADD_TYPE = "add"
     MUL_TYPE = "mul"
@@ -11,7 +12,7 @@ class ReservationStation:
         self.type = type
         self.name = f'RS({type}_{str(ReservationStation.id)})'
         self.busy = False
-        
+
         self.instruction = None
         self.Vj = None
         self.Vk = None
@@ -19,21 +20,21 @@ class ReservationStation:
         self.Qk = None
 
         self.A = None
-    
+
     def __str__(self) -> str:
         return f'{self.name}'
-    
+
     def appendInstruction(self, ins: Instruction):
         self.busy = True
         self.instruction = ins
 
-        self.Qj = ins.regS.writingUnit
-        self.Qk = ins.regT.writingUnit
+        self.Qj = ins.regS.writingInstruction
+        self.Qk = ins.regT.writingInstruction
 
         if self.Qj is None:
             self.Vj = ins.regS.value
 
         if self.Qk is None:
             self.Vk = ins.regT.value
-        
-        ins.regDest.writingUnit = self.name
+
+        ins.regDest.writingInstruction = ins

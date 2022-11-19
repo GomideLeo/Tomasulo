@@ -1,22 +1,34 @@
+from FunctionalUnit import FunctionalUnit
 from Instruction import Instruction
 from Register import Register
 from ReservationStation import ReservationStation
 from Tomasulo import Tomasulo
 
 regs = [Register(_) for _ in range(5)]
-rs_add1 = ReservationStation(ReservationStation.ADD_TYPE)
-rs_add2 = ReservationStation(ReservationStation.ADD_TYPE)
-rs_mul1 = ReservationStation(ReservationStation.MUL_TYPE)
-mul1 = Instruction(Instruction.OP_MUL, regs[0], regs[1], regs[2])
-add1 = Instruction(Instruction.OP_ADD, regs[1], regs[1], regs[2])
-add2 = Instruction(Instruction.OP_ADD, regs[4], regs[2], regs[3])
+
+fu = []
+fu.append(FunctionalUnit(FunctionalUnit.ADD_TYPE))
+fu.append(FunctionalUnit(FunctionalUnit.ADD_TYPE))
+rs = []
+rs.append(ReservationStation(ReservationStation.ADD_TYPE))
+rs.append(ReservationStation(ReservationStation.ADD_TYPE))
+rs.append(ReservationStation(ReservationStation.ADD_TYPE))
+rs.append(ReservationStation(ReservationStation.ADD_TYPE))
+rs.append(ReservationStation(ReservationStation.MUL_TYPE))
+ops = []
+ops.append(Instruction(Instruction.OP_ADD, regs[0], regs[0], regs[1]))
+ops.append(Instruction(Instruction.OP_ADD, regs[1], regs[0], regs[1]))
+ops.append(Instruction(Instruction.OP_ADD, regs[1], regs[0], regs[1]))
+ops.append(Instruction(Instruction.OP_ADD, regs[0], regs[0], regs[1]))
+ops.append(Instruction(Instruction.OP_ADD, regs[0], regs[0], regs[1]))
 
 solver = Tomasulo()
 solver.printIssuing = True
 solver.printCompletion = True
 solver.registers = regs
-solver.instructions = [mul1, add1, add2]
-solver.reservationStations = [rs_mul1, rs_add1, rs_add2]
+solver.instructions = ops
+solver.reservationStations = rs
+solver.functionalUnits = fu
 
 # print(list(map(lambda x: x.busy, solver.reservationStations)))
 print(regs)

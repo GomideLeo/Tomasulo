@@ -12,11 +12,12 @@ class ReservationStation:
         self.name = f'RS({type}_{str(ReservationStation.id)})'
         self.busy = False
         
-        self.op = None
+        self.instruction = None
         self.Vj = None
         self.Vk = None
         self.Qj = None
         self.Qk = None
+
         self.A = None
     
     def __str__(self) -> str:
@@ -24,16 +25,15 @@ class ReservationStation:
     
     def appendInstruction(self, ins: Instruction):
         self.busy = True
-        self.op = ins
+        self.instruction = ins
 
-        if ins.reg2.busy:
-            self.Qj = ins.reg2
-        else:
-            ins.reg2.busy = True
-            self.Vj = ins.reg2.value
+        self.Qj = ins.regS.writingUnit
+        self.Qk = ins.regT.writingUnit
+
+        if self.Qj is None:
+            self.Vj = ins.regS.value
+
+        if self.Qk is None:
+            self.Vk = ins.regT.value
         
-        if ins.reg3.busy:
-            self.Qk = ins.reg3
-        else:
-            ins.reg3.busy = True
-            self.Vk = ins.reg3.value
+        ins.regDest.writingUnit = self.name

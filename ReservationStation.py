@@ -1,4 +1,5 @@
 from Instruction import Instruction
+from Register import Register
 
 
 class ReservationStation:
@@ -41,13 +42,18 @@ class ReservationStation:
         self.busy = True
         self.instruction = ins
 
-        self.Qj = ins.regS.writingInstruction
-        self.Qk = ins.regT.writingInstruction
+        if type(ins.regS) == Register:
+            self.Qj = ins.regS.writingInstruction
+            if self.Qj is None:
+                self.Vj = ins.regS.value
+        else:
+            self.Vj = ins.regS
 
-        if self.Qj is None:
-            self.Vj = ins.regS.value
-
-        if self.Qk is None:
-            self.Vk = ins.regT.value
+        if type(ins.regT) == Register:
+            self.Qk = ins.regT.writingInstruction
+            if self.Qk is None:
+                self.Vk = ins.regT.value
+        else:
+            self.Vk = ins.regT
 
         ins.regDest.writingInstruction = ins

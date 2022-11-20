@@ -36,7 +36,7 @@ class Tomasulo:
 
         if self.printIssuing:
             print(
-                f'Cicle: {self.currentCycle} - {toIssue} is being issued to {rs}')
+                f'Cicle {self.currentCycle} - {toIssue} is being issued to {rs}')
         rs.appendInstruction(toIssue)
 
     def execute(self):
@@ -51,14 +51,14 @@ class Tomasulo:
             if fu.executionSize > 0:
                 if self.printExec:
                     print(
-                        f'Cicle: {self.currentCycle} - Instruction {fu.instruction} has completed extra at {fu} - Cicles remaining: {fu.executionSize}')
+                        f'Cicle {self.currentCycle} - Instruction {fu.instruction} has completed extra at {fu} - Cicles remaining: {fu.executionSize}')
             else:
-                if self.printCompletion:
-                    print(
-                        f'Cicle: {self.currentCycle} - Instruction {fu.instruction} has finished at {fu}')
                 fu.instruction.executionComplete = self.currentCycle
                 fu.result = Instruction.solve(
                     fu.Vj, fu.Vk, fu.instruction.op)
+                if self.printCompletion:
+                    print(
+                        f'Cicle {self.currentCycle} - Instruction {fu.instruction} has finished at {fu} - {fu.instruction.regDest.name} = {fu.result}')
 
         for rs in self.reservationStations:
             if rs.busy is False:
@@ -74,7 +74,7 @@ class Tomasulo:
 
             if self.printStart:
                 print(
-                    f'Cicle: {self.currentCycle} - Instruction {rs.instruction} has started at {fu}')
+                    f'Cicle {self.currentCycle} - Instruction {rs.instruction} has started at {fu}')
             fu.appendInstruction(rs)
 
             rs.clear()
@@ -111,7 +111,7 @@ class Tomasulo:
     def simulate(self):
         self.currentCycle = 0
 
-        while len(self.instructions) != 0 or any(list(map(lambda x: x.busy, self.reservationStations))):
+        while len(self.instructions) != 0 or any(list(map(lambda x: x.busy, self.reservationStations))) or any(list(map(lambda x: x.busy, self.functionalUnits))):
             self.currentCycle += 1
             self.issue()
             self.execute()
@@ -121,7 +121,7 @@ class Tomasulo:
     def getReservationStation(self, op):
         rs = None
 
-        if op == Instruction.OP_ADD or op == Instruction.OP_SUB:
+        if op == Instruction.OP_ADD or op == Instruction.OP_SUB or op == Instruction.OP_ADDI:
             rs = functools.reduce(
                 lambda a, b: b if b.type == ReservationStation.ADD_TYPE else a, filter(lambda a: not a.busy, self.reservationStations), None)
         elif op == Instruction.OP_MUL or op == Instruction.OP_DIV:

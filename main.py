@@ -16,8 +16,12 @@ def parseFile(file, registers):
             if int(regD) >= len(registers) or int(regS) >= len(registers) or int(regT) >= len(registers):
                 raise "Registrador Invalido"
 
-            instructions.append(Instruction(opType, registers[int(
-                regD)], registers[int(regS)], registers[int(regT)]))
+            if (opType.upper() == Instruction.OP_ADDI):
+                instructions.append(Instruction(opType.upper(), registers[int(
+                    regD)], registers[int(regS)], int(regT)))
+            else:
+                instructions.append(Instruction(opType.upper(), registers[int(
+                    regD)], registers[int(regS)], registers[int(regT)]))
 
     return instructions
 
@@ -33,13 +37,13 @@ parser.add_argument("-pE", "--printExec", action='store_true',
 parser.add_argument("-pS", "--printStart", action='store_true',
                     help="Sets Print on execution Start to true")
 
-parser.add_argument("-a", "--addRs", default=1, type=int,
+parser.add_argument("-a", "--addRs", default=4, type=int,
                     help="Sets the number of ADD reservation stations available")
-parser.add_argument("-m", "--mulRs", default=1, type=int,
+parser.add_argument("-m", "--mulRs", default=4, type=int,
                     help="Sets the number of MUL reservation stations available")
-parser.add_argument("-af", "--addFu", default=1, type=int,
+parser.add_argument("-af", "--addFu", default=2, type=int,
                     help="Sets the number of ADD functional units available")
-parser.add_argument("-mf", "--mulFu", default=1, type=int,
+parser.add_argument("-mf", "--mulFu", default=2, type=int,
                     help="Sets the number of MUL functional units available")
 parser.add_argument("-r", "--registers", default=8, type=int,
                     help="Sets the number of registers available")

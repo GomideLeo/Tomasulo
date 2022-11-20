@@ -2,24 +2,37 @@ from Instruction import Instruction
 from Register import Register
 from ReservationStation import ReservationStation
 from Tomasulo import Tomasulo
+import argparse
 
-regs = [Register(_) for _ in range(5)]
-rs_add1 = ReservationStation(ReservationStation.ADD_TYPE)
-rs_add2 = ReservationStation(ReservationStation.ADD_TYPE)
-rs_mul1 = ReservationStation(ReservationStation.MUL_TYPE)
-mul1 = Instruction(Instruction.OP_MUL, regs[0], regs[1], regs[2])
-add1 = Instruction(Instruction.OP_ADD, regs[1], regs[1], regs[2])
-add2 = Instruction(Instruction.OP_ADD, regs[4], regs[2], regs[3])
+parser = argparse.ArgumentParser()
+
+parser.add_argument("-pI", "--printIssuing", action='store_true', help = "Sets Print Issuing to true")
+parser.add_argument("-pC", "--printCompletion", action='store_true', help = "Sets Print Completion to true")
+parser.add_argument("-pE", "--printExec", action='store_true', help = "Sets Print Exec to true")
+
+parser.add_argument("-a", "--addRs", default=1, type=int, help = "Sets the number of ADD reservation stations available")
+parser.add_argument("-m", "--mulRs", default=1, type=int, help = "Sets the number of MUL reservation stations available")
+parser.add_argument("-r", "--registers", default=10, type=int, help = "Sets the number of registers available")
+
+args = parser.parse_args()
+
+addRs = [ReservationStation(ReservationStation.ADD_TYPE) for _ in range(args.addRs)]
+mulRs = [ReservationStation(ReservationStation.MUL_TYPE) for _ in range(args.mulRs)]
+rs = addRs + mulRs
+
+# mul1 = Instruction(Instruction.OP_MUL, regs[0], regs[1], regs[2])
+# add1 = Instruction(Instruction.OP_ADD, regs[0], regs[1], regs[2])
+# add2 = Instruction(Instruction.OP_ADD, regs[0], regs[1], regs[2])
 
 solver = Tomasulo()
-solver.printIssuing = True
-solver.printCompletion = True
-solver.registers = regs
-solver.instructions = [mul1, add1, add2]
-solver.reservationStations = [rs_mul1, rs_add1, rs_add2]
+solver.printIssuing = args.printIssuing
+solver.printCompletion = args.printCompletion
+solver.printExec = args.printExec
+solver.registers = args.registers
+solver.reservationStations = rs
 
-# print(list(map(lambda x: x.busy, solver.reservationStations)))
-print(regs)
-solver.simulate()
-print(regs)
-# for rs in solve
+# solver.instructions = [mul1, add1, add2]
+
+# print(regs)
+# solver.simulate()
+# print(regs)

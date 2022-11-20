@@ -36,7 +36,7 @@ class Tomasulo:
 
         if self.printIssuing:
             print(
-                f'Cicle {self.currentCycle} - {toIssue} is being issued to {rs}')
+                f'Cicle: {self.currentCycle} - {toIssue} is being issued to {rs}')
         rs.appendInstruction(toIssue)
 
     def execute(self):
@@ -55,7 +55,7 @@ class Tomasulo:
             else:
                 if self.printCompletion:
                     print(
-                        f'Cicle {self.currentCycle} - Instruction {fu.instruction} has finished at {fu}')
+                        f'Cicle: {self.currentCycle} - Instruction {fu.instruction} has finished at {fu}')
                 fu.instruction.executionComplete = self.currentCycle
                 fu.result = Instruction.solve(
                     fu.Vj, fu.Vk, fu.instruction.op)
@@ -74,7 +74,7 @@ class Tomasulo:
 
             if self.printStart:
                 print(
-                    f'Cicle {self.currentCycle} - Instruction {rs.instruction} has started at {fu}')
+                    f'Cicle: {self.currentCycle} - Instruction {rs.instruction} has started at {fu}')
             fu.appendInstruction(rs)
 
             rs.clear()

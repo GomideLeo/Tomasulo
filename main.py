@@ -37,9 +37,9 @@ parser.add_argument("-a", "--addRs", default=1, type=int,
                     help="Sets the number of ADD reservation stations available")
 parser.add_argument("-m", "--mulRs", default=1, type=int,
                     help="Sets the number of MUL reservation stations available")
-parser.add_argument("-a", "--addFu", default=1, type=int,
+parser.add_argument("-af", "--addFu", default=1, type=int,
                     help="Sets the number of ADD functional units available")
-parser.add_argument("-m", "--mulFu", default=1, type=int,
+parser.add_argument("-mf", "--mulFu", default=1, type=int,
                     help="Sets the number of MUL functional units available")
 parser.add_argument("-r", "--registers", default=8, type=int,
                     help="Sets the number of registers available")
@@ -57,9 +57,9 @@ mulRs = [ReservationStation(ReservationStation.MUL_TYPE)
          for _ in range(args.mulRs)]
 rs = addRs + mulRs
 
-addFu = [ReservationStation(ReservationStation.ADD_TYPE)
+addFu = [FunctionalUnit(ReservationStation.ADD_TYPE)
          for _ in range(args.addFu)]
-mulFu = [ReservationStation(ReservationStation.MUL_TYPE)
+mulFu = [FunctionalUnit(ReservationStation.MUL_TYPE)
          for _ in range(args.mulFu)]
 fu = addFu + mulFu
 

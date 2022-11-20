@@ -5,12 +5,17 @@ class ReservationStation:
     ADD_TYPE = "add"
     MUL_TYPE = "mul"
 
-    id = 0
+    mul_id = 0
+    add_id = 0
 
     def __init__(self, type: str) -> None:
-        ReservationStation.id += 1
         self.type = type
-        self.name = f'RS({type}_{str(ReservationStation.id)})'
+        if type == ReservationStation.ADD_TYPE:
+            self.name = f'RS({type}_{str(ReservationStation.add_id)})'
+            ReservationStation.add_id += 1
+        if type == ReservationStation.MUL_TYPE:
+            self.name = f'RS({type}_{str(ReservationStation.mul_id)})'
+            ReservationStation.mul_id += 1
         self.clear()
 
     def __str__(self) -> str:

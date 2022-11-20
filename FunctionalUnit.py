@@ -8,12 +8,19 @@ class FunctionalUnit:
     SIZE_ADD = 5
     SIZE_MUL = 10
 
-    id = 0
+    add_id = 0
+    mul_id = 0
 
     def __init__(self, type: str) -> None:
-        FunctionalUnit.id += 1
         self.type = type
-        self.name = f'FU({type}_{str(FunctionalUnit.id)})'
+
+        if type == ReservationStation.ADD_TYPE:
+            self.name = f'RS({type}_{str(FunctionalUnit.add_id)})'
+            ReservationStation.add_id += 1
+        if type == ReservationStation.MUL_TYPE:
+            self.name = f'RS({type}_{str(FunctionalUnit.mul_id)})'
+            ReservationStation.mul_id += 1
+
         self.clear()
 
     def __str__(self) -> str:

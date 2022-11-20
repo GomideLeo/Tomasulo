@@ -4,6 +4,20 @@ from ReservationStation import ReservationStation
 from Tomasulo import Tomasulo
 import argparse
 
+def parseFile(file, registers):
+    instructions = []
+    
+    with open(file, 'r') as f:
+        for line in f:
+            [opType, regD, regS, regT] = line.split()
+
+            if int(regD) >= len(registers) or int(regS) >= len(registers) or int(regT) >= len(registers):
+                raise "Registrador Invalido"
+
+            instructions.append(Instruction(opType, registers[int(regD)], registers[int(regS)], registers[int(regT)]))
+    
+    return instructions
+
 parser = argparse.ArgumentParser()
 
 parser.add_argument("-pI", "--printIssuing", action='store_true', help = "Sets Print Issuing to true")
@@ -13,26 +27,26 @@ parser.add_argument("-pE", "--printExec", action='store_true', help = "Sets Prin
 parser.add_argument("-a", "--addRs", default=1, type=int, help = "Sets the number of ADD reservation stations available")
 parser.add_argument("-m", "--mulRs", default=1, type=int, help = "Sets the number of MUL reservation stations available")
 parser.add_argument("-r", "--registers", default=10, type=int, help = "Sets the number of registers available")
+parser.add_argument("-f", "--file", default='./cmds.txt', type=str, help = "File path to comands file")
 
 args = parser.parse_args()
+
+registers = [Register(_) for _ in range(args.registers)]
+instructions = parseFile(args.file, registers)
 
 addRs = [ReservationStation(ReservationStation.ADD_TYPE) for _ in range(args.addRs)]
 mulRs = [ReservationStation(ReservationStation.MUL_TYPE) for _ in range(args.mulRs)]
 rs = addRs + mulRs
 
-# mul1 = Instruction(Instruction.OP_MUL, regs[0], regs[1], regs[2])
-# add1 = Instruction(Instruction.OP_ADD, regs[0], regs[1], regs[2])
-# add2 = Instruction(Instruction.OP_ADD, regs[0], regs[1], regs[2])
-
 solver = Tomasulo()
 solver.printIssuing = args.printIssuing
 solver.printCompletion = args.printCompletion
 solver.printExec = args.printExec
-solver.registers = args.registers
+solver.registers = registers
 solver.reservationStations = rs
 
-# solver.instructions = [mul1, add1, add2]
+solver.instructions = instructions
 
-# print(regs)
-# solver.simulate()
-# print(regs)
+print(registers)
+solver.simulate()
+print(registers)

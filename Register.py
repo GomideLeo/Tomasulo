@@ -3,8 +3,8 @@
 class Register:
     id = 0
     def __init__(self, value = 0) -> None:
-        Register.id += 1
         self.name = 'Reg_' + str(Register.id)
+        Register.id += 1
         self.value = value
         self.busy = False
         self.writingUnit = None

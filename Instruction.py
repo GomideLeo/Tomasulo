@@ -2,7 +2,7 @@ from Register import Register
 
 class Instruction:
     OP_ADD = 'ADD'
-    OP_SUB = 'SUV'
+    OP_SUB = 'SUB'
     OP_MUL = 'MUL'
     OP_DIV = 'DIV'
 
@@ -23,14 +23,17 @@ class Instruction:
         self.regT       = regT
 
     def __str__(self) -> None:
-       return f'{self.op}({self.regDest.name}, {self.regS.name} {self.regT.name})'
+        return f'{self.op}({self.regDest.name}, {self.regS.name} {self.regT.name})'
+    
+    def __repr__(self) -> None:
+        return f'{self.op}({self.regDest.name}, {self.regS.name} {self.regT.name})'
     
     def solve(a, b, opType) -> None:
         if opType == Instruction.OP_ADD:
-           return a + b
+            return a + b
         elif opType == Instruction.OP_SUB:
-           return a - b
+            return a - b
         elif opType == Instruction.OP_MUL:
-           return a * b
+            return a * b
         elif opType == Instruction.OP_DIV:
-           return a / b
+            return a / b

@@ -5,12 +5,21 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python: Current File",
+            "name": "Python: Main",
             "type": "python",
             "request": "launch",
             "program": "main.py",
             "console": "integratedTerminal",
-            "args": ["-pC","-pS",],
+            "args": ["-pC","-pS"],
+            "justMyCode": true
+        },
+        {
+            "name": "Python: Full Log",
+            "type": "python",
+            "request": "launch",
+            "program": "main.py",
+            "console": "integratedTerminal",
+            "args": ["-pC","-pS", "-pI","-pE", ">","log.log"],
             "justMyCode": true
         }
     ]

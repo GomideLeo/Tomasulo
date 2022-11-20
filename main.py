@@ -45,7 +45,7 @@ parser.add_argument("-af", "--addFu", default=2, type=int,
                     help="Sets the number of ADD functional units available")
 parser.add_argument("-mf", "--mulFu", default=2, type=int,
                     help="Sets the number of MUL functional units available")
-parser.add_argument("-r", "--registers", default=8, type=int,
+parser.add_argument("-r", "--registers", default=16, type=int,
                     help="Sets the number of registers available")
 parser.add_argument("-f", "--file", default='./cmds.txt',
                     type=str, help="File path to comands file")

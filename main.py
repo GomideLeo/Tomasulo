@@ -76,6 +76,6 @@ solver.functionalUnits = fu
 
 solver.instructions = instructions
 
-print("Registers:", *registers, sep="\n\t")
+print("Registers: [", *registers, sep="\n\t", end="\n]\n")
 solver.simulate()
-print("Registers:", *registers, sep="\n\t")
+print("Registers: [", *registers, sep="\n\t", end="\n]\n")

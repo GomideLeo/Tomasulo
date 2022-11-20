@@ -11,18 +11,20 @@ class ReservationStation:
         ReservationStation.id += 1
         self.type = type
         self.name = f'RS({type}_{str(ReservationStation.id)})'
-        self.busy = False
-
-        self.instruction = None
-        self.Vj = None
-        self.Vk = None
-        self.Qj = None
-        self.Qk = None
-
-        self.A = None
+        self.clear()
 
     def __str__(self) -> str:
         return f'{self.name}'
+
+    def clear(self):
+        self.busy = False
+        self.instruction = None
+
+        self.Qj = None
+        self.Qk = None
+        self.Vj = None
+        self.Vk = None
+        self.A = None
 
     def appendInstruction(self, ins: Instruction):
         self.busy = True

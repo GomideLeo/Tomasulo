@@ -10,8 +10,8 @@ class Tomasulo:
     def __init__(self) -> None:
         self.printIssuing = True
         self.printCompletion = True
-        self.printStart = True
-        self.printExec = True
+        self.printStart = False
+        self.printExec = False
 
         self.currentCycle = 0
 
@@ -35,7 +35,8 @@ class Tomasulo:
         toIssue.issueCycle = self.currentCycle
 
         if self.printIssuing:
-            print(toIssue, 'is being issued to', rs)
+            print(
+                f'Cicle {self.currentCycle} - {toIssue} is being issued to {rs}')
         rs.appendInstruction(toIssue)
 
     def execute(self):
@@ -46,15 +47,15 @@ class Tomasulo:
             if fu.instruction.executionStart == -1:
                 fu.instruction.executionStart = self.currentCycle
 
-            if fu.executionSize != 0:
+            fu.executionSize -= 1
+            if fu.executionSize > 0:
                 if self.printExec:
                     print(
-                        f'Instruction {fu.instruction} has completed extra at {fu}')
-                fu.executionSize -= 1
-
-            if fu.executionSize == 0:
+                        f'Cicle: {self.currentCycle} - Instruction {fu.instruction} has completed extra at {fu} - Cicles remaining: {fu.executionSize}')
+            else:
                 if self.printCompletion:
-                    print(f'Instruction {fu.instruction} has finished at {fu}')
+                    print(
+                        f'Cicle {self.currentCycle} - Instruction {fu.instruction} has finished at {fu}')
                 fu.instruction.executionComplete = self.currentCycle
                 fu.result = Instruction.solve(
                     fu.Vj, fu.Vk, fu.instruction.op)
@@ -72,15 +73,11 @@ class Tomasulo:
                 continue
 
             if self.printStart:
-                print(f'Instruction {rs.instruction} has started at {fu}')
+                print(
+                    f'Cicle {self.currentCycle} - Instruction {rs.instruction} has started at {fu}')
             fu.appendInstruction(rs)
 
-            rs.busy = False
-            rs.instruction = None
-            rs.Qj = None
-            rs.Qk = None
-            rs.Vj = None
-            rs.Vk = None
+            rs.clear()
 
     def writeBack(self):
         for fu in self.functionalUnits:

@@ -14,4 +14,4 @@ class Register:
         return f'{self.name}(value={self.value})'
 
     def __repr__(self) -> str:
-        return f'\n\t{self.name}(value={self.value})'
+        return f'{self.name}(value={self.value})'

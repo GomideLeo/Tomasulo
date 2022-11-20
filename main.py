@@ -17,21 +17,23 @@ rs.append(ReservationStation(ReservationStation.ADD_TYPE))
 rs.append(ReservationStation(ReservationStation.MUL_TYPE))
 ops = []
 ops.append(Instruction(Instruction.OP_ADD, regs[0], regs[0], regs[1]))
-ops.append(Instruction(Instruction.OP_ADD, regs[1], regs[0], regs[1]))
-ops.append(Instruction(Instruction.OP_ADD, regs[1], regs[0], regs[1]))
-ops.append(Instruction(Instruction.OP_ADD, regs[0], regs[0], regs[1]))
-ops.append(Instruction(Instruction.OP_ADD, regs[0], regs[0], regs[1]))
+ops.append(Instruction(Instruction.OP_ADD, regs[2], regs[2], regs[1]))
+ops.append(Instruction(Instruction.OP_ADD, regs[3], regs[3], regs[3]))
+ops.append(Instruction(Instruction.OP_ADD, regs[2], regs[1], regs[3]))
+ops.append(Instruction(Instruction.OP_ADD, regs[3], regs[2], regs[1]))
 
 solver = Tomasulo()
 solver.printIssuing = True
 solver.printCompletion = True
+solver.printStart = True
+solver.printExec = True
 solver.registers = regs
 solver.instructions = ops
 solver.reservationStations = rs
 solver.functionalUnits = fu
 
 # print(list(map(lambda x: x.busy, solver.reservationStations)))
-print(regs)
+print("Registers:", *regs, sep="\n\t")
 solver.simulate()
-print(regs)
+print("Registers:", *regs, sep="\n\t")
 # for rs in solve

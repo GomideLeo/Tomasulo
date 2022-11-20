@@ -31,11 +31,11 @@ class Instruction:
     def __repr__(self) -> str:
         return str(self)
 
-    def __str__(self) -> None:
+    def __str__(self):
         return f'{self.issueCycle} {self.op}({self.regDest.name}, {self.regS.name} {self.regT.name})'
 
-    def solve(a, b, opType) -> None:
-        Instruction.getOp(opType)(a, b)
+    def solve(a, b, opType):
+        return Instruction.getOp(opType)(a, b)
 
     def getOp(opType):
         if opType == Instruction.OP_ADD:

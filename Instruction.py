@@ -8,7 +8,7 @@ class Instruction:
     OP_DIV = 'DIV'
     OP_ADDI = 'ADDI'
 
-    def __init__(self, operation, regDest: Register, regS: Register, regT: Register | int) -> None:
+    def __init__(self, operation, regDest: Register, regS: Register, regT) -> None:
         self.issueCycle = -1
         self.executionStart = -1
         self.executionComplete = -1

@@ -54,8 +54,7 @@ class Tomasulo:
                         f'Cicle {self.currentCycle} - Instruction {fu.instruction} has completed extra at {fu} - Cicles remaining: {fu.executionSize}')
             else:
                 fu.instruction.executionComplete = self.currentCycle
-                fu.result = Instruction.solve(
-                    fu.Vj, fu.Vk, fu.instruction.op)
+                fu.result = Instruction.solve(fu.Vj, fu.Vk, fu.instruction.op)
                 if self.printCompletion:
                     print(
                         f'Cicle {self.currentCycle} - Instruction {fu.instruction} has finished at {fu} - {fu.instruction.regDest.name} = {fu.result}')
@@ -98,13 +97,13 @@ class Tomasulo:
 
             fu.clear()
 
-    def broadCast(self, isntruction, value):
+    def broadCast(self, instruction, value):
         for rs in self.reservationStations:
-            if rs.Qj == isntruction:
+            if rs.Qj == instruction:
                 rs.Qj = None
                 rs.Vj = value
 
-            if rs.Qk == isntruction:
+            if rs.Qk == instruction:
                 rs.Qk = None
                 rs.Vk = value
 

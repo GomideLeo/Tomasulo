@@ -3,19 +3,9 @@ from Register import Register
 
 class Instruction:
     OP_ADD = 'ADD'
-    OP_SUB = 'SUV'
+    OP_SUB = 'SUB'
     OP_MUL = 'MUL'
     OP_DIV = 'DIV'
-
-    def getOpKey(self):
-        if self.op == Instruction.OP_ADD:
-            return "add"
-        elif self.op == Instruction.OP_SUB:
-            return "sub"
-        elif self.op == Instruction.OP_MUL:
-            return "mul"
-        elif self.op == Instruction.OP_DIV:
-            return "div"
 
     def __init__(self, operation, regDest: Register, regS: Register, regT: Register) -> None:
         self.issueCycle = -1
